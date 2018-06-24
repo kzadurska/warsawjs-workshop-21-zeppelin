@@ -26,6 +26,15 @@ const styles = {
   sidebar: {
     width: 200,
   },
+  space: {
+    justifyContent: 'space-between'
+  },
+  sideBySide: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  }
 };
 
 class Header extends Component {
@@ -52,14 +61,16 @@ class Header extends Component {
     return (
       <div>
         <AppBar position="static">
-          <Toolbar>
-            <IconButton color="inherit" aria-label="Menu" onClick={this.onDrawerOpen}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="title" color="inherit" >
-              Title
-            </Typography>
-            <Button color="inherit">Logout</Button>
+          <Toolbar className={this.props.classes.space}>
+            <div className={this.props.classes.sideBySide}>
+              <IconButton color="inherit" aria-label="Menu" onClick={this.onDrawerOpen}>
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="title" color="inherit" >
+                Title
+              </Typography>
+            </div>
+            <Button color="inherit" onClick={this.props.logout}>Logout</Button>
           </Toolbar>
           <Drawer open={this.state.isDrawerOpen}>
             <div
