@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import URLS from './urls'
+import Login from './Login'
+import Layout from './Layout'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <BrowserRouter>
+        <CssBaseline>
+          <Switch>
+            <Route path={URLS.LOGIN} exact component={Login} />
+            <Route path={URLS.LAYOUT} component={Layout} />   
+          </Switch>    
+        </CssBaseline>
+      </BrowserRouter>
     );
   }
 }
+
 
 export default App;
