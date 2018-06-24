@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core'
-import { Route, Redirect } from  'react-router-dom';
+import { Route, Redirect, Switch } from  'react-router-dom';
 import URLS from './urls'
 import Header from './Header'
 import CreateProject from './CreateProject'
@@ -41,8 +41,10 @@ class Layout extends Component {
     return (
       <div>
         <Header logout={this.handleLogout} />
-        <Route path={URLS.NEW_PROJECT} component={CreateProject} />
-        <Route path={URLS.PROJECT_LIST} component={ProjectList} />
+        <Switch>
+          <Route path={URLS.NEW_PROJECT} component={CreateProject} />
+          <Route path={URLS.PROJECT_LIST} component={ProjectList} />
+        </Switch>
       </div>
     )
   }

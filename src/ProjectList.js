@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Button } from '@material-ui/core';
 import { connect } from 'react-redux'
+import { Link } from  'react-router-dom';
 import * as actions from './actions';
+import URLS from './urls'
 
 import logo from './logo.svg';
 import './App.css';
@@ -42,18 +44,24 @@ class ProjectList extends Component {
       )
     }
     return ( 
-      <ul>
-        {
+      <div>
+        <Link to={URLS.NEW_PROJECT}>Add new project</Link>
+        <div>
+          <h3>Projects list</h3>
+          <ul>
+            {
 
-          this.props.projects.map(project => (
-            <li key={project.id}>
-              <h3>{project.title}</h3>
-              <div className={this.props.classes.author}>By {project.owner}</div>
-              <div className={this.props.classes.date}>on {project.date}</div>
-            </li>
-          ))
-        }
-      </ul>
+              this.props.projects.map(project => (
+                <li key={project.id}>
+                  <h4>{project.title}</h4>
+                  <div className={this.props.classes.author}>By {project.owner}</div>
+                  <div className={this.props.classes.date}>on {project.date}</div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
     )
   }
 }

@@ -47,3 +47,25 @@ export function readPosts() {
       });
   };
 }
+
+const startCreatePost = createAction(actionTypes.CREATE_POST_START);
+const endCreatePost = createAction(actionTypes.CREATE_POST_END);
+
+export function createPost({ username, title, image }) {
+  return (dispatch, getState) => {
+    dispatch(startCreatePost());
+    return api
+      .createPost = ({ username, title, image })
+      .then((response) => {
+        if (response.ok) {
+          debugger
+          dispatch(endCreatePost({ post: response.post}));
+        } else {
+          dispatch(endCreatePost(new Error(response.errors.join('\n'))));
+        }
+      })
+      .catch((error) => {
+        dispatch(endCreatePost(new Error('Network error')));
+      });
+  };
+}
