@@ -26,6 +26,26 @@ function auth(state, action) {
   }
 }
 
+const DEFAULT_POSTS = {
+  posts: [],
+  isPending: false
+}
+
+function projects(state, action) {
+  switch(action.type) {
+    case actionTypes.READ_POSTS_START:
+      return { ...state, posts: null, isPending: true }
+    case actionTypes.READ_POSTS_END:
+      return action.error
+      ? { ...state, posts: null, isPending: false }
+      // overwrite old posts list with new fetched posts list
+      : { ...state, posts: action.payload.posts, isPending: false}
+    default:
+      return state || DEFAULT_POSTS
+  }
+}
+
 export default combineReducers({
-  auth
+  auth,
+  projects
 });

@@ -25,3 +25,25 @@ export function login({ username, password }) {
 }
 
 export const logout = createAction(actionTypes.LOGOUT);
+
+const startReadPosts = createAction(actionTypes.READ_POSTS_START);
+const endReadPosts = createAction(actionTypes.READ_POSTS_END);
+
+export function readPosts() {
+  return (dispatch, getState) => {
+    dispatch(startReadPosts());
+    return api
+      .readPostList()
+      .then((response) => {
+        if (response.ok) {
+          debugger
+          dispatch(endReadPosts({ posts: response.posts }));
+        } else {
+          dispatch(endReadPosts(new Error(response.errors.join('\n'))));
+        }
+      })
+      .catch((error) => {
+        dispatch(endReadPosts(new Error('Network error')));
+      });
+  };
+}
