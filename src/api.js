@@ -1,7 +1,7 @@
 // send methods
 const apiUrl = 'https://warsawjs-21-api.herokuapp.com'
 
-const transformJsonResponse = (response) =>{
+const transformJsonResponse = (response) => {
   if (!response.ok) {
     return Promise.reject(response);
   }

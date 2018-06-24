@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux'
 import { Route } from  'react-router-dom';
 import { withStyles, TextField, Button } from '@material-ui/core';
-import { login } from './api'
+import { login } from './actions'
 import Header from './Header'
 import CreateProject from './CreateProject'
 import ProjectList from './ProjectList'
+
+import * as actions from './actions';
 import URLS from './urls'
 
 const styles = {
@@ -25,7 +29,8 @@ class Login extends Component {
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      isPending: false
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -39,28 +44,41 @@ class Login extends Component {
   }
 
   handleSubmit() {
-    login(this.state)
+    const { username, password } = this.state
+    this.setState({ isPending: true })
+    this.props.login({username, password})
+      .then((response) => { 
+           // i'm logged in, redirect to project list
+          this.props.history.replace(URLS.PROJECT_LIST)
+      })
+      .catch(error => {
+        this.setState({ 
+          username: '', 
+          password: '', 
+          isPending: false 
+        })
+      })
   }
 
   render() {
-    // const { self, input } = this.props.clases
+    const { self, input } = this.props.classes
     return (
       <form>
-        <div className={this.props.classes.self}>
+        <div className={self}>
           <TextField 
-            className={this.props.classes.input} 
+            className={input} 
             name="username" 
             value={this.state.username} 
             placeholder="Type username"
             onChange={this.handleChange} />
           <TextField 
-            className={this.props.classes.input} 
+            className={input} 
             name="password" 
             value={this.state.value} 
             placeholder="Type password" 
             onChange={this.handleChange} />
           <Button 
-            className={this.props.classes.input} 
+            className={input} 
             variant="raised" 
             onClick={this.handleSubmit}>
             Login
@@ -71,4 +89,12 @@ class Login extends Component {
   }
 } 
 
-export default withStyles(styles)(Login)
+// we don't have to use dispatch directly on the action
+// it is added here
+// we access it then though this.props
+// *magic*
+const mapDispatchToProps = {
+  login: actions.login
+}
+
+export default withStyles(styles)(withRouter(connect(null, mapDispatchToProps)(Login)));

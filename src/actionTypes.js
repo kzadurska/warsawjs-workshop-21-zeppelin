@@ -1,0 +1,6 @@
+const LOGOUT = 'LOGOUT'
+
+const LOGIN_START = 'LOGIN_START'
+const LOGIN_END = 'LOGIN_END'
+
+export { LOGOUT, LOGIN_START, LOGIN_END }
