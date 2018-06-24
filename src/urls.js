@@ -3,7 +3,7 @@
 const URLS = {
 	LOGIN: '/login',
 	LAYOUT: '/',
-  NEW_PROJECT: '/create',
+  NEW_PROJECT: '/projects/create',
   PROJECT_LIST: '/projects'
 }
 
